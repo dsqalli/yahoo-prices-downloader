@@ -1,0 +1,1 @@
+This script allows you to download historical daily prices from Yahoo Finance.

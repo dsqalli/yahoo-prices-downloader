@@ -1,9 +1,13 @@
+import pandas as pd
 from pandas_datareader import data
+from pandas.tseries.offsets import BDay
 
 class Downloader():
-  def __init__(self, ticker, start_date, end_date, adj_close_only=True):
+  end_date = (pd.datetime.today() - BDay(1)).strftime('%Y-%m-%d')
+  def __init__(self, ticker, start_date, end_date=end_date, adj_close_only=True):
     """
-    adj_close_only is set on True as Default. Explicitly set it to False if you want the complete yahoo finance historical price data.
+    adj_close_only is set on True by Default. Explicitly set it to False if you want the complete yahoo finance historical price data.
+    end_date is set as the last business day by default.
     """
     self.ticker = ticker
     self.start_date = start_date
@@ -34,14 +38,8 @@ class Downloader():
     Saves the dataframe into a csv file. Default path is a data folder in the current working directory.
     """
     try:
-      csv_file_name = self.ticker + '_from_{}_to_{}.csv'.format(self.start_date, self.end_date)
+      csv_file_name = "/" + self.ticker + "_from_{}_to_{}.csv".format(self.start_date, self.end_date)
       self.get_daily_prices().to_csv(path + csv_file_name)
     except AttributeError:
       print("Please make sure you're entering a valid ticker symbol and valid start and end dates.")
 
-
-
-start = '2010-1-1'
-end = '2020-4-17'
-yahoo = Downloader('^FCHI',start, end)
-yahoo.save_to_csv(r'C:\Users\Driss Sqalli\Desktop')

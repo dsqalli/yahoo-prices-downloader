@@ -1,6 +1,7 @@
 import pandas as pd
 from pandas_datareader import data
 from pandas.tseries.offsets import BDay
+from pandas_datareader._utils import RemoteDataError
 
 class Downloader():
   start_date = '2010-1-1'
@@ -18,7 +19,7 @@ class Downloader():
 
   def get_daily_prices(self):
     """
-    returns a dataframe containing the daily prices from Yahoo, using pandas_datareader data.DataReader method
+    return dataframe containing daily prices from Yahoo, using pandas_datareader data.DataReader method
     """
     try:
       if self.adj_close_only :
@@ -32,16 +33,17 @@ class Downloader():
                                           end=self.end_date, 
                                           data_source = 'yahoo')    
       return close_prices_df
-    except:
-      pass
+    except RemoteDataError:
+      print("No data found for symbol {} using Yahoo Finance.".format(self.ticker))
+
       
   def save_to_csv(self,path='data/'):
     """
-    Saves the dataframe into a csv file. Default path is a data folder in the current working directory.
+    Save dataframe into csv file. Default path is a data folder in the current working directory.
     """
     try:
       csv_file_name = "/" + self.ticker + "_from_{}_to_{}.csv".format(self.start_date, self.end_date)
       self.get_daily_prices().to_csv(path + csv_file_name)
     except AttributeError:
-      print("Please make sure you're entering a valid ticker symbol and valid start and end dates.")
+      pass
 

@@ -3,10 +3,12 @@ from pandas_datareader import data
 from pandas.tseries.offsets import BDay
 
 class Downloader():
+  start_date = '2010-1-1'
   end_date = (pd.datetime.today() - BDay(1)).strftime('%Y-%m-%d')
-  def __init__(self, ticker, start_date, end_date=end_date, adj_close_only=True):
+  def __init__(self, ticker, start_date = start_date, end_date=end_date, adj_close_only=True):
     """
-    adj_close_only is set on True by Default. Explicitly set it to False if you want the complete yahoo finance historical price data.
+    adj_close_only is set on True by default. Explicitly set it to False if you want the complete yahoo finance historical price data.
+    start_date is set as 2010-1-1 by default.
     end_date is set as the last business day by default.
     """
     self.ticker = ticker

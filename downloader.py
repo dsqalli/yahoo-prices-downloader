@@ -58,4 +58,3 @@ class Downloader():
         except AttributeError:
             pass
 
-print(Downloader("MSFT").get_daily_prices())

@@ -1,3 +1,6 @@
 venv
 data
 __pycache__
+csvs_to_df.py
+PEA_stock.py
+chunks_of_code
